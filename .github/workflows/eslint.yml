@@ -5,7 +5,7 @@ on:
       - "**.tsx?"
       - "**.jsx?"
       - "**.vue"
-    - .github/workflows/eslint.yml
+      - .github/workflows/eslint.yml
 
 jobs:
   eslint:

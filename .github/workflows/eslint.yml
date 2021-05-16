@@ -1,5 +1,10 @@
 name: ESLint
-on: push
+on:
+  push:
+    - '**.tsx?'
+    - '**.jsx?'
+    - '**.vue'
+    - .github/workflows/eslint.yml
 
 jobs:
   eslint:

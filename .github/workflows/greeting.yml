@@ -1,0 +1,10 @@
+name: Greeting
+on: push
+
+jobs:
+  greeting:
+    name: Greeting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet to the user who pushed
+        run: echo "Hello ${{ github.author }} !"

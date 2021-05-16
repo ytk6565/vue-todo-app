@@ -1,9 +1,10 @@
 name: ESLint
 on:
   push:
-    - '**.tsx?'
-    - '**.jsx?'
-    - '**.vue'
+    paths:
+      - "**.tsx?"
+      - "**.jsx?"
+      - "**.vue"
     - .github/workflows/eslint.yml
 
 jobs:
@@ -16,15 +17,15 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Get the path to the cache directory
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn-lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      # - name: Get the path to the cache directory
+      #   id: yarn-cache
+      #   run: echo "::set-output name=dir::$(yarn cache dir)"
+      # - uses: actions/cache
+      #   with:
+      #     path: ${{ steps.yarn-cache.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn-lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-yarn-
 
       - run: yarn install
       - run: yarn run lint

@@ -6,15 +6,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  name: 'my-button',
+  name: "my-button",
 
   setup(props, ctx) {
     return {
       onClick() {
-        ctx.emit('click');
+        ctx.emit("click");
       },
     };
   },

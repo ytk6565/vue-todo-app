@@ -46,5 +46,5 @@ jobs:
         if: steps.diff.outputs.fixed == 'yes'
         run: |
           git add .;
-          git commit -m "Fixed auto-fixable ESLint errors by github-actions";
+          git commit -m "Fixed auto-fixable ESLint errors by github-actions" -n;
           git push origin HEAD:${GITHUB_REF}

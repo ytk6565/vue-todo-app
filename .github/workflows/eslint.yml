@@ -1,0 +1,50 @@
+name: ESLint
+on:
+  push:
+    paths:
+      - "**.tsx?"
+      - "**.jsx?"
+      - "**.vue"
+      - .github/workflows/eslint.yml
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Get the path to the cache directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn-lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install
+      - run: yarn run lint --max-warnings 0
+
+      - name: Has auto fixed
+        id: diff
+        run: |
+          if (git diff --shortstat | grep '[0-9]'); then echo "::set-output name=fixed::yes"; fi
+      - name: Set up Git account information
+        if: steps.diff.outputs.fixed == 'yes'
+        run: |
+          git remote set-url origin https://github-actions:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
+          git config --global user.name $GITHUB_ACTOR
+          git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push the diff
+        if: steps.diff.outputs.fixed == 'yes'
+        run: |
+          git add .;
+          git commit -m "Fixed auto-fixable ESLint errors by github-actions" -n;
+          git push origin HEAD:${GITHUB_REF}

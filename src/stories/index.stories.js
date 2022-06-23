@@ -7,12 +7,14 @@ export default {
   title: "Button",
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const withText = () => ({
   components: { MyButton },
   template: '<my-button @click="action">Hello Button</my-button>',
   methods: { action: action("clicked") },
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const withJSX = () => ({
   render() {
     return (
@@ -23,6 +25,7 @@ export const withJSX = () => ({
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const withSomeEmoji = () => ({
   components: { MyButton },
   template: "<my-button>😀 😎 👍 💯</my-button>",
